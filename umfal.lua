@@ -11,13 +11,12 @@ local umfal = {}
 -----------------------
 local function getBlankUmfalWithMeta()
     local umfal = {}
-    umfal.errorManager = {}
     umfal.applicationFunctions = {}
 
     local metatable = {}
     function metatable.__call(self, appName)
         -- Application should be already initialized when library is called as a function
-        return self[appName] or errorManager.applicationNotInitialized(appName)
+        return self[appName] or error("Application " .. appName .. " was not initialized")
     end
 
     setmetatable(umfal, metatable)
@@ -63,7 +62,7 @@ function umfal.initAppFromAbsolute(appName, path)
     local application = getBlankApplicationWithMeta(appName, path)
 
     if not umfal.applicationFolderExists(path) then
-        umfal.errorManager.applicationFolderNotFound(appName, path)
+        error("Failed to find an application " .. appName .. " on path " .. path)
     end
 
     umfal[appName] = application
@@ -193,7 +192,8 @@ function umfal.applicationFunctions:loadNode(node)
     local loadedNode, reason = self:attemptToLoadNode(node)
 
     if not loadedNode then
-        umfal.errorManager.failedToLoadNode(self.name, node[#node], reason)
+        local nodeName = node[#node]
+        error("Failed to load node `" .. nodeName .. "`: " .. reason)
     end
     
     return loadedNode
@@ -239,7 +239,8 @@ function umfal.applicationFunctions:loadModule(node)
     local loadedModule = dofile(pathToModule)
 
     if not loadedModule then
-        umfal.errorManager.failedToLoadNode(self.name, node[#node], "module returned nil after execution")
+        local nodeName = node[#node]
+        error("Failed to load module `" .. nodeName .. "`: module returned nil after execution")
     end
 
     return loadedModule
@@ -256,16 +257,5 @@ function umfal.applicationFunctions:appendToNode(node, nodeName)
 
     return newNode
 end
------
--- Error manager
------
-function umfal.errorManager.applicationFolderNotFound(applicationName, path) 
-    error("Failed to find an application " .. applicationName .. " on path " .. path, 3)
-end
 
-function umfal.errorManager.failedToLoadNode(applicationName, nodeName, reason) 
-    error("Failed to load node `" .. nodeName .. "`: " .. reason, 4)
-end
-
------
 return umfal
