@@ -53,11 +53,6 @@ end
 -----------------------
 umfal = getBlankUmfalWithMeta()
 
--- The simplest way to initialize application is to use an absolute path initializator
--- For instance, your app is placed on /home/myApp, and its entry point is /home/myApp/main.lua
--- So, you can utilize `initAppFromAbsolute` as such: `umfal.initAppFromAbsolute("myApp", "/home/myApp")`
--- But it's not recommended to use this function, since it forces users to store your app at the exact
--- filesystem location - use relative initializator instead (see below)
 function umfal.initAppFromAbsolute(appID, path)
     local application = getBlankApplicationWithMeta(appID, path)
 
@@ -70,14 +65,6 @@ function umfal.initAppFromAbsolute(appID, path)
     return application
 end
 
--- The second way (and the best one) to initialize application is to use a relative path initializator
--- For instance, your app is placed on /home/myApp, and its entry point is /home/myApp/main.lua
--- So, in this case you can utilize `initAppFromRelative` as such: `umfal.initAppFromRelative("myApp")` ("myApp" here
--- is just and ID that other files of yours will use to find initialized app later), and it will automatically detect 
--- and set /home/myApp as application's root.
--- However, for example, if our `main.lua` is placed at /home/myApp/run/main.lua, the before-mentioned code won't work
--- So, that's when `level delta` parameter kicks in - now we should run `umfal.initAppFromRelative("myApp", 2)` to point
--- on /home/myApp, instead of /home/myApp/run
 function umfal.initAppFromRelative(appID, levelDelta)
     if appID == nil then
         error("Application ID must be provided")
@@ -120,8 +107,8 @@ function umfal.applicationFolderExists(path)
     return filesystem.isDirectory(path)
 end
 
--- Three functions below are just a copy from Filesystem API
--- That's because MineOS's Filesystem API does not have them
+-- Three functions below are just a copy from OpenOS's Filesystem API
+-- They are brought here because MineOS doesn't have them
 local function segments(path)
     local parts = {}
     for part in path:gmatch("[^\\/]+") do
