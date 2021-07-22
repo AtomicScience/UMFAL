@@ -14,9 +14,9 @@ local function getBlankUmfalWithMeta()
     umfal.applicationFunctions = {}
 
     local metatable = {}
-    function metatable.__call(self, appName)
+    function metatable.__call(self, appID)
         -- Application should be already initialized when library is called as a function
-        return self[appName] or error("Application " .. appName .. " was not initialized")
+        return self[appID] or error("Application " .. appID .. " was not initialized")
     end
 
     setmetatable(umfal, metatable)
@@ -24,9 +24,9 @@ local function getBlankUmfalWithMeta()
     return umfal
 end
 
-local function getBlankApplicationWithMeta(appName, path)
+local function getBlankApplicationWithMeta(appID, path)
     local blankApplication = {}
-    blankApplication.name = appName
+    blankApplication.id = appID
     blankApplication.path = path
 
     for methodName, method in pairs(umfal.applicationFunctions) do
@@ -58,14 +58,14 @@ umfal = getBlankUmfalWithMeta()
 -- So, you can utilize `initAppFromAbsolute` as such: `umfal.initAppFromAbsolute("myApp", "/home/myApp")`
 -- But it's not recommended to use this function, since it forces users to store your app at the exact
 -- filesystem location - use relative initializator instead (see below)
-function umfal.initAppFromAbsolute(appName, path)
-    local application = getBlankApplicationWithMeta(appName, path)
+function umfal.initAppFromAbsolute(appID, path)
+    local application = getBlankApplicationWithMeta(appID, path)
 
     if not umfal.applicationFolderExists(path) then
-        error("Failed to find an application " .. appName .. " on path " .. path)
+        error("Failed to find an application " .. appID .. " on path " .. path)
     end
 
-    umfal[appName] = application
+    umfal[appID] = application
 
     return application
 end
@@ -78,10 +78,9 @@ end
 -- However, for example, if our `main.lua` is placed at /home/myApp/run/main.lua, the before-mentioned code won't work
 -- So, that's when `level delta` parameter kicks in - now we should run `umfal.initAppFromRelative("myApp", 2)` to point
 -- on /home/myApp, instead of /home/myApp/run
-function umfal.initAppFromRelative(appName, levelDelta)
-    -- TODO: abstain from application NAME and rather use an application IDENTIFIER, or ID
-    if appName == nil then
-        error("Application name must be provided")
+function umfal.initAppFromRelative(appID, levelDelta)
+    if appID == nil then
+        error("Application ID must be provided")
     end
     levelDelta = levelDelta or 1
 
@@ -89,7 +88,7 @@ function umfal.initAppFromRelative(appName, levelDelta)
 
     local resolvedPath = umfal.resolveRelativePath(pathToRunningScript, levelDelta)
 
-    return umfal.initAppFromAbsolute(appName, resolvedPath)
+    return umfal.initAppFromAbsolute(appID, resolvedPath)
 end
 
 -----------------------
