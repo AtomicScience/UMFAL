@@ -205,15 +205,13 @@ end
 
 function umfal.applicationFunctions:attemptToLoadNode(node)
     if not self:nodeIsValid(node) then
-        return nil, "file does not exist"
+        return nil, "file or folder does not exist"
     end
 
     if self:nodeIsFolder(node) then
         return self:getEmptyFolder(node), nil
     elseif self:nodeIsLuaScript(node) then
         return self:loadModule(node), nil
-    else
-        return nil, "file is not a .lua script"
     end
 end
 
