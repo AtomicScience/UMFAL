@@ -79,6 +79,10 @@ end
 -- So, that's when `level delta` parameter kicks in - now we should run `umfal.initAppFromRelative("myApp", 2)` to point
 -- on /home/myApp, instead of /home/myApp/run
 function umfal.initAppFromRelative(appName, levelDelta)
+    -- TODO: abstain from application NAME and rather use an application IDENTIFIER, or ID
+    if appName == nil then
+        error("Application name must be provided")
+    end
     levelDelta = levelDelta or 1
 
     local pathToRunningScript = umfal.getPathToRunningScript()
