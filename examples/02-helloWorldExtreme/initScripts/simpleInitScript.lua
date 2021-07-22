@@ -1,8 +1,8 @@
 -- If you didn't notice, our entry point is now not in the
 -- root folder (02-helloWorldExtreme), but one level below it.
 --
--- By default (as it did in first example), UMFAL considers as root
--- the folder the entry point script is placed.
+-- By default (as it did in the first example), UMFAL considers as a root
+-- the folder the entry point script is placed in.
 --
 -- And if it's not the case, UMFAL should be notified about it with
 -- special LEVEL DELTA parameter, in this instance it's equal to 2.
