@@ -146,7 +146,7 @@ function umfal.canonical(path)
       return result
     end
 end
-  
+
 function umfal.concat(...)
     local set = table.pack(...)
     for index, value in ipairs(set) do
@@ -164,14 +164,14 @@ function umfal.applicationFunctions:nodeIsFolder(node)
     return filesystem.isDirectory(pathToNode)
 end
 
-function umfal.applicationFunctions:nodeIsModule(node)
+function umfal.applicationFunctions:nodeIsLuaScript(node)
     local pathToNode = self:resolvePathToNodeAsModule(node)
 
     return filesystem.exists(pathToNode) and not filesystem.isDirectory(pathToNode)
 end
 
-function umfal.applicationFunctions:nodeExists(node)
-    local isModule = self:nodeIsModule(node)
+function umfal.applicationFunctions:nodeIsValid(node)
+    local isModule = self:nodeIsLuaScript(node)
     local isFolder = self:nodeIsFolder(node)
 
     return isModule or isFolder
@@ -199,18 +199,18 @@ function umfal.applicationFunctions:loadNode(node)
         local nodeName = node[#node]
         error("Failed to load node `" .. nodeName .. "`: " .. reason)
     end
-    
+
     return loadedNode
 end
 
 function umfal.applicationFunctions:attemptToLoadNode(node)
-    if not self:nodeExists(node) then
+    if not self:nodeIsValid(node) then
         return nil, "file does not exist"
     end
 
     if self:nodeIsFolder(node) then
         return self:getEmptyFolder(node), nil
-    elseif self:nodeIsModule(node) then
+    elseif self:nodeIsLuaScript(node) then
         return self:loadModule(node), nil
     else
         return nil, "file is not a .lua script"
