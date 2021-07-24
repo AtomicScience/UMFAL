@@ -144,6 +144,29 @@ end
 -- Application functions
 -----------------------
 
+-- Public:
+function umfal.applicationFunctions:attemptToLoadModule(parentFolder, moduleName)
+    if parentFolder == self then
+        parentFolder = self:getEmptyFolder({})
+    end
+
+    if not self:nodeIsFolder(parentFolder.node) then
+        return nil, "parent node is not valid"
+    end
+
+    if moduleName == nil then
+        error("Module name was not provided!")
+    end
+
+    local pathToModule = self:appendToNode(parentFolder.node, moduleName)
+
+    if not self:nodeIsLuaScript(pathToModule) then
+        return nil
+    end
+
+    return self:loadNode(pathToModule)
+end
+-- Private:
 function umfal.applicationFunctions:nodeIsFolder(node)
     local pathToNode = self:resolvePathToNodeAsFolder(node)
 
