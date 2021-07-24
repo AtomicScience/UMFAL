@@ -21,3 +21,11 @@ wget -f https://github.com/AtomicScience/UMFAL/releases/latest/download/umfal.lu
 UMFAL (stands for **Unified Multi-File Application Loader**) is a library, that serves as a module loader for complex multifile applications.
 
 It's somewhat similar to the 'stock' Lua module system, but it does not aim to replace it, but rather *reimplement* it to allow to link files within a single application
+## How do I use it?
+Since there is no way to learn something but in practice, all the features of the UMFAL are covered in a series of throughly explained examples.
+### List of examples:
+1. Hello World
+2. Hello World Extreme
+3. Application Fetch
+4. Safe Module Loading
+5. Module Caching
