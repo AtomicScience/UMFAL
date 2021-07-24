@@ -11,7 +11,7 @@
 -- resolve paths every time, to more sophisticated ones, such as an ability
 -- to share a single module cache between all the app's components
 
--- (Caching is deeply covered in example [TODO])
+-- (Caching is deeply covered in example 05-moduleCaching)
 local app = require("umfal")("applicationFetch")
 
 local hello = {}
