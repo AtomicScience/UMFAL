@@ -1,4 +1,4 @@
-local app = dofile("../umfal.lua").initAppFromRelative("safeModuleLoad")
+local app = require("umfal").initAppFromRelative("safeModuleLoad")
 
 print("'Classical' module loading:")
 -- The 'Classical' loading, that was used before, is just using an `app` as a table
