@@ -88,7 +88,7 @@ end
 ### Caching
 One of the most annoying things about module loading in Lua 
 is the cache desynchronization 
-*(if you know what `package.loaded = nil` does, 
+*(if you know what `packages.loaded = nil` does, 
 you understand what I mean)*.
 
 UMFAL **does** cache the modules, but it elegantly solves the desynchronization issue by avoiding usage of global cache, using **app-exclusive** caches instead.
