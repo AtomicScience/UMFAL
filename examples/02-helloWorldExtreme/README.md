@@ -32,3 +32,7 @@ app.hello.greet(worldSubject)
 app.hello.greet(numberSubject)
 app.hello.greet(nameSubject)
 ```
+### Modules in `subjects`
+In `subjects`, three modules reside - all of them doing basically the same, returning a string, and `nameGenerator.lua` is the most complex one - it requests random male names from internet resource 
+### `hello.lua`
+This module is simple - it just prints "Hello" and a string arguments that is passed to it
