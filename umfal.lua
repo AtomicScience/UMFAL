@@ -5,18 +5,26 @@
 local filesystem = require("filesystem")
 local unicode = require("unicode")
 
-local umfal = {}
+local umfal
 -----------------------
 -- Metatable functions
 -----------------------
 local function getBlankUmfalWithMeta()
     local umfal = {}
     umfal.applicationFunctions = {}
+    umfal.appCache = {}
 
     local metatable = {}
     function metatable.__call(self, appID)
-        -- Application should be already initialized when library is called as a function
-        return self[appID] or error("Application " .. appID .. " was not initialized")
+        local fetchedApplication = self.appCache[appID]
+
+        if not fetchedApplication then
+            error("Application " .. appID .. " was not initialized")
+        end
+
+        fetchedApplication.lastLazyModule = {}
+
+        return fetchedApplication, fetchedApplication.lastLazyModule
     end
 
     setmetatable(umfal, metatable)
@@ -60,7 +68,7 @@ function umfal.initAppFromAbsolute(appID, path)
         error("Failed to find an application " .. appID .. " on path " .. path)
     end
 
-    umfal[appID] = application
+    umfal.appCache[appID] = application
 
     return application
 end
@@ -247,14 +255,28 @@ end
 function umfal.applicationFunctions:loadModule(node)
     local pathToModule = self:resolvePathToNodeAsModule(node)
 
-    local loadedModule = dofile(pathToModule)
+    local loadedModuleReturns = dofile(pathToModule)
 
-    if not loadedModule then
-        local nodeName = node[#node]
-        error("Failed to load module `" .. nodeName .. "`: module returned nil after execution")
+    if loadedModuleReturns then
+        return loadedModuleReturns
     end
 
-    return loadedModule
+    if self:lastLazyModuleContainsSomething() then
+        local lastLazyModule = self.lastLazyModule
+        self.lastLazyModule = {}
+        return lastLazyModule
+    end
+
+    local nodeName = node[#node]
+    error("Failed to load module `" .. nodeName .. "`: module returned nil and didn't fill a lazy table")
+end
+
+function umfal.applicationFunctions:lastLazyModuleContainsSomething()
+    for something in pairs(self.lastLazyModule) do
+        return true
+    end
+
+    return false
 end
 
 function umfal.applicationFunctions:appendToNode(node, nodeName)
