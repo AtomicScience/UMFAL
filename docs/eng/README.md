@@ -38,7 +38,7 @@ myAwesomeProject
 |  └ stringFunctions.lua    
 └ quickstart.lua
 ```
-Here, `quickstart.lua`is an **entry points**, that starts all the application.
+Here, `quickstart.lua`is an **entry pointo **, that starts all the application.
 
 All other files are modules, that look similar to 'standard' Lua modules:
 ```lua
