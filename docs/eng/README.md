@@ -62,6 +62,8 @@ that is usually just a project name.
 ### Importing modules
 After correctly initializing an application object, we can use it to load our modules:
 ```lua
+local app = require("umfal").initAppFromRelative("briefApp")
+
 local menu    = app.gui.menu
 local dialog  = app.gui.dialog
 local request = app.api.internet.request
@@ -69,11 +71,44 @@ local strFun  = app.api.stringFunction
 ```
 These variables will contain tables that modules have returned - the same thing that `require()` returns.
 
-But one great thing about UMFAL modules is that you don't have to explicitly *require* modules, or even to put them in variables like it's done above - you can use modules right from the code:
+And one great thing about UMFAL modules is that you don't have to explicitly *require* modules, or even to put them in variables like it's done above - you can use modules right from the code:
 ```lua
+local app = require("umfal").initAppFromRelative("briefApp")
+
 local function someFunction()
     local str1 = "Hello"
     local str2 = ", World!"
     return app.api.stringFunction.concat(str1, str2)
 end
+
+local function anotherFunction(address)
+    return app.api.internet.request(address)
+end
 ```
+### Caching
+One of the most annoying things about module loading in Lua 
+is the cache desynchronization 
+*(if you know what `package.loaded = nil` does, 
+you understand what I mean)*.
+
+UMFAL **does** cache the modules, but it elegantly solves the desynchronization issue by avoiding usage of global cache, using **app-exclusive** caches instead.
+
+What does it mean? Consider the following code:
+```lua
+-- App initialized, cache is empty
+local app = require("umfal").initAppFromRelative("briefApp")
+
+app.gui.menu.showMenu() -- .lua file is run to load the module
+app.gui.menu.showMenu() -- method loaded from cache
+app.gui.menu.showMenu() -- method loaded from cache
+app.gui.menu.showMenu() -- method loaded from cache
+
+-- App is reinitialized, and cache of "briefApp" is wiped
+app = require("umfal").initAppFromRelative("briefApp")
+
+app.gui.menu.showMenu() -- .lua file is run to load the module
+app.gui.menu.showMenu() -- method loaded from cache
+app.gui.menu.showMenu() -- method loaded from cache
+app.gui.menu.showMenu() -- method loaded from cache
+```
+Each time `initAppFromRelative` is run *(it happens **every** time your entry point is started)*, cache of this specific app is wiped.
