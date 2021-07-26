@@ -29,9 +29,6 @@ But if you just want to get familiar with what's UMFAL is capable of, below is a
 Consider a following multifile project you supposedly want to use UMFAL at:
 ```
 myAwesomeProject
-├ bin
-│  ├ start.lua
-│  └ config.lua
 ├ gui
 │  ├ menu.lua
 │  └ dialog.lua
@@ -41,7 +38,7 @@ myAwesomeProject
 |  └ stringFunctions.lua    
 └ quickstart.lua
 ```
-Here, `quickstart.lua`, `start.lua`, and `config.lua` are **entry points**, that start all the application.
+Here, `quickstart.lua`is an **entry points**, that starts all the application.
 
 All other files are modules, that look similar to 'standard' Lua modules:
 ```lua
