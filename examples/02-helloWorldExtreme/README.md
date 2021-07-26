@@ -18,7 +18,7 @@ local app = require("umfal").initAppFromRelative("helloWorldExtreme", 2)
 
 Here, `2` is a parameter called **level delta** - it indicates, how root folder is located relative to the running entry point script:
 
-* `1` - root folder is the folder that contains the script (`bin` in this example)
+* `1` (default) - root folder is the folder that contains the script (`bin` in this example)
 * `2` - root folder is one level higher (`02-helloWorldExtreme`)
 * ... and so on
 
