@@ -113,7 +113,7 @@ Each time `initAppFromRelative` is run *(it happens **every** time your entry po
 We have an access to the app object, but only in the entry point script.
 
 But what, for example, we would need to use it to load 
-`stringFunctions` for instance, from another module?
+`stringFunctions` from another module?
 
 To avoid wasting resources on initializing the object again, we can
 simply load it from cache (**to fetch**). It's done the following way:
