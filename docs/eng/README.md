@@ -112,3 +112,63 @@ app.gui.menu.showMenu() -- method loaded from cache
 app.gui.menu.showMenu() -- method loaded from cache
 ```
 Each time `initAppFromRelative` is run *(it happens **every** time your entry point is started)*, cache of this specific app is wiped.
+### Applicaiton fetching
+We have an access to the app object, but only in the entry point script.
+
+But what, for example, we would need to use it to load 
+`stringFunctions` for instance, from another module?
+
+To avoid wasting resources on initializing the object again, we can
+simply load it from cache (**to fetch**). It's done the following way:
+```lua
+local app = require("umfal")("briefApp")
+```
+After that, we can use the fetched object as usual:
+```lua
+local app = require("umfal")("briefApp")
+
+local request = {}
+
+function request.sendRequest(where)
+    return broadcast(app.api.stringFunction.concat("google.com", where))
+end
+
+return request
+```
+### Lazy modules
+The second thing that annoys me the most, right after cache desync,
+is the necessity to repeat in **every file** these two lines:
+```lua
+local module = {}
+...
+return module
+```
+Yes, these are just two simple lines, but they are annoying, especially in small modules
+
+And instead of this *deprecated* approach with `return`, UMFAL 
+promotes an approach called **"Lazy modules"**
+
+When using **lazy modules**, you delegate the UMFAL both 
+the creation of module's table and its managment, which 
+allows you not to return it
+
+Compare two modules:
+```lua
+local app = require("umfal")("briefApp")
+
+local request = {}
+
+function request.sendRequest(where)
+    return broadcast(app.api.stringFunction.concat("google.com", where))
+end
+
+return request
+```
+
+```lua
+local app, lazyModule = require("umfal")("briefApp")
+
+function lazyModule.sendRequest(where)
+    return broadcast(app.api.stringFunction.concat("google.com", where))
+end
+```
