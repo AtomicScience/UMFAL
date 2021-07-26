@@ -1,6 +1,7 @@
 # Hello, World!
 This example aims on explaining the bare basics of the UMFAL - **three** things, to be exact:
 
+Topics to be covered:
 1. Initializing an application
 2. Composing a module
 3. Using a module
