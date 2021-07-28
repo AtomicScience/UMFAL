@@ -1,11 +1,11 @@
 # Safe Module Loading
-All the previous examples were **opitimistic** - they were assuming that all the modules always are where they are expected to be. But what if it's not the case?
+All the previous examples were **optimistic** - they were assuming that all the modules always are where they are expected to be. But what if it's not the case?
 
 This example demonstrates, how UMFAL reacts to missing modules, and how to properly handle their possible absence using UMFAL facilities.
 
 *Topics to be covered in this example:*
 1. Result of usage of the missing modules
-2. Safe loading mechaincs
+2. Safe loading mechanics
 
 ## init.lua
 ### Classical module loading
@@ -28,7 +28,7 @@ But the bottom line was commented out. The reason is that it would've caused an 
 /lib/umfal.lua:217 : Failed to load node `absentModule`: file or folder does not exist
 ```
 ### Safe module loading
-But what if you, for some reason, want to handle possible absence of the module?
+But what if you, for some reason, want to handle the possible absence of the module?
 
 Of course, you could handle the error using `pcall()`, but it will result into very bulky and hard-to-read construction.
 
@@ -47,6 +47,6 @@ local absentModule = app:attemptToLoadModule(app.folder, "absentModule")
 print("Absent module is nil: " .. tostring(absentModule == nil))
 ```
 
-Its first argument is the folder your module is placed in (`app.folder`), or just an application object, if your module resides in root (`app`).
+Its first argument is the folder your module is placed in (`app.folder`), or just an application object if your module resides in the root (`app`).
 
-Unlike *classical* loading, safe loading will not raise an error, but just return nil.
+Unlike *classical* loading, safe loading will not raise an error but just return nil.
