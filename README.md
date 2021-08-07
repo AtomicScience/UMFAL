@@ -21,7 +21,7 @@ UMFAL (stands for **Unified Multi-File Application Loader**) is a library, that 
 
 It's somewhat similar to the 'stock' Lua module system, but it does not aim to replace it, but rather *reimplement* it to allow to link files within a single application
 ## How do I use it?
-If you feel like diving in the topic, check out code examples that cover all the features of UMFAL.
+If you feel like diving in the topic, check out [code examples](https://github.com/AtomicScience/UMFAL/tree/master/examples) that cover all the features of UMFAL.
 
 But if you just want to get familiar with what's UMFAL is capable of, below is a quick brief of its features:
 ## Features brief
