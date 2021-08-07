@@ -1,6 +1,3 @@
--- What allows UMFAL to process plain returns from the
--- modules is the fact that returns have higher priority
--- than lazy modules do
 local app, lazyModule = require("umfal")("lazyModules")
 
 function lazyModule.sayWorld()
