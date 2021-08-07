@@ -1,6 +1,6 @@
 # UMFAL
 
-[Этот материал доступен на **русском**](https://github.com/AtomicScience/UMFAL/README-ru.md)
+[Этот материал доступен на **русском**](https://github.com/AtomicScience/UMFAL/blob/master/README-ru.md)
 
 For me, one of the most frustrating things about the OpenComputers community is the fact, that no matter how complex one's program is, chances, that it's just one big file - sometimes up to **thousands** of lines - are extremely high.
 
