@@ -1,4 +1,6 @@
 # Lazy Modules
+[Этот материал доступен на **русском**](https://github.com/AtomicScience/UMFAL/blob/master/examples/06-lazyModules/README-ru.md)
+
 This example demonstrates one of the coolest feature of the UMFAL - the **lazy modules**
 
 *Topics to be covered in this example*
