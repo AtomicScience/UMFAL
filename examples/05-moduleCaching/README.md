@@ -1,11 +1,14 @@
 # Module Caching
+[Этот материал доступен на **русском**](https://github.com/AtomicScience/UMFAL/blob/master/examples/05-moduleCaching/README-ru.md)
+
 This example explains the caching policy of UMFAL
 
 *Topics to be covered in this example*
 1. UMFAL's caching policy
 2. Cache wiping conditions
 
-## module.lua
+## Code explanation
+### module.lua
 This module is just a module, with the only exception: it has a `print` not inside a function, but just in the code:
 
 ```lua
