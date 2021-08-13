@@ -1,4 +1,6 @@
 # Application fetch
+[Этот материал доступен на **русском**](https://github.com/AtomicScience/UMFAL/blob/master/examples/03-applicationFetch/README-ru.md)
+
 This example explains, how modules can be linked with each other using **application fetch**.
 
 And as a bonus, it demonstrates, that modules can be any value, basically, not just tables
@@ -9,7 +11,7 @@ Topics to be covered in this example
 
 ## Code explanation
 ### init.lua
-`int.lua` - is an entry point, and it is simple.
+`init.lua` - is an entry point, and it is simple.
 
 It just invokes a function from `hello.lua`, that, in its turn, invokes a function from `world.lua`, and that's it
 ### hello.lua
