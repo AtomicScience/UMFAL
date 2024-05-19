@@ -1,5 +1,8 @@
 # UMFAL
 
+> [!WARNING]
+> The project has been archived and moved to a centralized, OPPM-compliant repo [here](https://github.com/AtomicScience/atomic-programs/tree/master/umfal)
+
 [Этот материал доступен на **русском**](https://github.com/AtomicScience/UMFAL/blob/master/README-ru.md)
 
 For me, one of the most frustrating things about the OpenComputers community is the fact, that no matter how complex one's program is, chances, that it's just one big file - sometimes up to **thousands** of lines - are extremely high.
